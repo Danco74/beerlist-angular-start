@@ -1,0 +1,38 @@
+#beers-container {
+    text-align: center;
+    padding: 5%;
+    flex-wrap: wrap;
+    display: flex;
+}
+
+.beer {
+    background-color: #ecf0f1;
+    width: 25%;
+    margin: 1%;
+    padding: 1%
+}
+
+.beer img {
+    width: 100%;
+    height: 200px;
+    padding: 1%;
+}
+
+.fa-star-o {
+    color: #FF7700;
+}
+.fa-star {
+    color: #FFDD00;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: #FF7700;
+}
+.isReadonly {
+    .fa-star-o {
+        color: #000000;
+    }
+    .fa-star {
+        color: #DCDCDC;
+        -webkit-text-stroke-width: 2px;
+        -webkit-text-stroke-color: #000000;
+    }
+}

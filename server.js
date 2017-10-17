@@ -20,6 +20,18 @@ app.listen(8000, function () {
   console.log("yo yo yo, on 8000!!")
 });
 
+
+
+var handler = function(res, next){
+  return function(err, beer) {
+    if (err) {
+      return next(err);
+    }
+    res.send(beer);
+  }
+}
+
+
 app.get('/beers', function (req, res, next) {
   Beer.find(function (error, beers) {
     if (error) {
@@ -48,13 +60,15 @@ app.post('/beers', function (req, res, next) {
     return;
   } else {
 
-    Beer.create(req.body, function (err, beer) {
-      if (err) {
-        return next(err);
-      } else {
-        return res.send(beer);
-      }
-    });
+    // Beer.create(req.body, function (err, beer) {
+    //   if (err) {
+    //     return next(err);
+    //   } else {
+    //     return res.send(beer);
+    //   }
+    // });
+
+    Beer.create(req.body, handler(res,next));
 
   }
 });
@@ -64,33 +78,15 @@ app.post('/beers/:id/ratings', function(req, res, next) {
 
   var updateObject = { $push: { ratings: req.body.rating } };
 
-  Beer.findByIdAndUpdate(req.params.id, updateObject, { new: true }, function(err, beer) {
-      if (err) {
-          return next(err);
-      } else {
-          res.send(beer);
-      }
-  });
+  Beer.findByIdAndUpdate(req.params.id, updateObject, { new: true }, handler(res,next));
 });
 
 app.put('/beers/:id', function(req, res, next) {
-  Beer.findByIdAndUpdate(req.param.id, req.body, function(err, beer) {
-    if (err) {
-      return next(err);
-    } else {
-      res.send(beer);
-    }
-  });
+  Beer.findByIdAndUpdate(req.param.id, req.body, handler(res,next));
 });
 
 app.delete('/beers/:id', function(req, res, next) {
-  Beer.findByIdAndRemove(req.params.id, function(err, beer) {
-    if (err) {
-      return next(err);
-    } else {
-      res.send(beer);
-    }
-  });
+  Beer.findByIdAndRemove(req.params.id, handler(res,next));
 });
 
 // error handler to catch 404 and forward to main error handler
