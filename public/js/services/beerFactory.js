@@ -21,6 +21,22 @@ app.factory('beerFactory', function($http) {
             return angular.copy(response.data);
           });
       };
+
+      beerFactory.addRating = function(id,rating) {
+        return $http.post('/beers/' + id + '/ratings',{
+          rating: rating
+        })
+          .then(function(response) {
+            return angular.copy(response.data);
+          });
+      };
+
+      beerFactory.updateBeer = function(id,updateObj) {
+        return $http.put('/beers/' + id,updateObj)
+          .then(function(response) {
+            return angular.copy(response.data);
+          });
+      };
     
       return beerFactory;
 });

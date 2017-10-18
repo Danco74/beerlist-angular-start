@@ -5,7 +5,8 @@ var beerSchema = new mongoose.Schema({
     style: { type: String },
     image_url: { type: String },
     abv: { type: Number },
-    ratings: [Number]
+    ratings: [Number],
+    rating: Number
   });
 
 

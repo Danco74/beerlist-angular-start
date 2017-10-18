@@ -52,11 +52,11 @@ app.post('/beers', function (req, res, next) {
     min: 3,
     max: 20
   });
-  req.checkBody("image_url", "Invalid image URL.").isURL({protocols:['http']});
+  req.checkBody("image_url", "Invalid image URL.").isURL({protocols:['http','https']});
 
   var errors = req.validationErrors();
   if (errors) {
-    res.send(errors);
+    res.next(errors);
     return;
   } else {
 
@@ -68,6 +68,7 @@ app.post('/beers', function (req, res, next) {
     //   }
     // });
 
+    req.body.rating = 0;
     Beer.create(req.body, handler(res,next));
 
   }
@@ -76,13 +77,29 @@ app.post('/beers', function (req, res, next) {
 
 app.post('/beers/:id/ratings', function(req, res, next) {
 
-  var updateObject = { $push: { ratings: req.body.rating } };
+   var updateObject = { $push: { ratings: req.body.rating } };
 
-  Beer.findByIdAndUpdate(req.params.id, updateObject, { new: true }, handler(res,next));
+   Beer.findById(req.params.id, function (err,beer){
+     var sum = 0;
+     for (var i=0; i<beer.ratings.length; i++){
+       sum += beer.ratings[i];
+     }
+
+     beer.ratings.push(req.body.rating);
+     calcRating = ((sum + req.body.rating) / (beer.ratings.length));
+     beer.rating = Math.round( calcRating * 10) / 10;
+     beer.save(handler(res,next));
+   })
+
+  // Beer.findByIdAndUpdate(req.params.id, updateObject, { new: true }, handler(res,next));
+
+
+
+
 });
 
 app.put('/beers/:id', function(req, res, next) {
-  Beer.findByIdAndUpdate(req.param.id, req.body, handler(res,next));
+  Beer.findByIdAndUpdate(req.params.id, req.body,{new: true}, handler(res,next));
 });
 
 app.delete('/beers/:id', function(req, res, next) {

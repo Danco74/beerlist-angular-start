@@ -14,7 +14,7 @@
                 <div class="page-header">
                 </div>
                 <!-- render beers here -->
-                <form ng-submit="addBeer()">
+                <form ng-submit="addBeer()" ng-hide="edit">
                     <h3>Add a new beer</h3>
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Beer Name" ng-model="name"></input>
@@ -29,30 +29,64 @@
                         <input type="text" class="form-control" placeholder="Image URL" ng-model="image"></input>
                     </div>
                     <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="button" ng-click="toggleReverse()" class="btn btn-primary" > Reverse Sort </button>
                 </form>
+
+                <form ng-submit="updateBeer()" ng-show="edit">
+                        <h3>Edit beer</h3>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="{{name}}" ng-model="name"></input>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="{{style}}" ng-model="style"></input>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="ABV" ng-model="abv"></input>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="{{image}}" ng-model="image"></input>
+                        </div>
+                        <button type="submit" class="btn btn-warning">Save</button>
+                        <button type="button" ng-click="toggleReverse()" class="btn btn-primary" > Reverse Sort </button>
+                    </form>
             </div>
         </div>
 
 
+        
+        
+        
+
         <div id="beers-container">
-            <div class="beer" ng-repeat="beer in beers">
+
+            <div class="beer" ng-repeat="beer in beers | orderBy: 'rating' : reverse ">
                 <div class="beerImage">
                     <img ng-src="{{beer.image_url}}">
                 </div>
                 <div class="removeButton">
-                    <a href="#" ng-click="removeBeer()">Remove</a>
+                    <a href="#" ng-click="removeBeer()">Remove</a> |
+                    <a href="#" ng-click="toggleEdit(beer)">edit</a>
                 </div>
                 <div>
                     <h3> {{beer.name}} </h3>
                 </div>
+                <div>
+                    <star-rating max="maxValue" value='ratingValue' hover='changeOnHover' is-readonly='isReadonly' beer-id='beer._id'>
+                    </star-rating>
+                </div>
+                <br>
+                <div>
+                    <b> {{beer.rating}} </b>
+                </div>
+
             </div>
         </div>
 
-        <star-rating max="maxValue" value='ratingValue' hover='changeOnHover' is-readonly='isReadonly'></star-rating>
+
     </div>
-    
-    
-    
+
+
+
 
 
 
