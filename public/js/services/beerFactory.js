@@ -37,6 +37,26 @@ app.factory('beerFactory', function($http) {
             return angular.copy(response.data);
           });
       };
+
+      beerFactory.getBeer = function(id) {
+        return $http.get('/beers/' + id)
+          .then(function(response) {
+            return response.data
+          }, function(err) {
+            console.error(err)
+          });
+      };
+
+      beerFactory.addReview = function(id,review){
+        return $http.post('/beers/' + id + '/reviews', {
+          name: "guest",
+          text: review
+        }).
+          then(function(response){
+            return angular.copy(response.data);
+      });
+    };
+    
     
       return beerFactory;
 });

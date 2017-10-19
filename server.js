@@ -90,12 +90,16 @@ app.post('/beers/:id/ratings', function(req, res, next) {
      beer.rating = Math.round( calcRating * 10) / 10;
      beer.save(handler(res,next));
    })
+});
 
-  // Beer.findByIdAndUpdate(req.params.id, updateObject, { new: true }, handler(res,next));
+app.post('/beers/:id/reviews', function(req, res, next) {
+  var update = { $push: { reviews: req.body } };
+  Beer.findByIdAndUpdate(req.params.id, update, { new: true }, handler(res, next));
+});
 
-
-
-
+app.delete('/beers/:beerid/reviews/:reviewid', function(req, res, next) {
+  var update = { $pull: { comments: { _id: req.params.reviewid } } };
+  Post.findByIdAndUpdate(req.params.beerid, update, { new: true }, handler(res, next));
 });
 
 app.put('/beers/:id', function(req, res, next) {
@@ -104,6 +108,10 @@ app.put('/beers/:id', function(req, res, next) {
 
 app.delete('/beers/:id', function(req, res, next) {
   Beer.findByIdAndRemove(req.params.id, handler(res,next));
+});
+
+app.get('/beers/:id', function(req, res, next) {
+  Beer.findById(req.params.id, handler(res, next));
 });
 
 // error handler to catch 404 and forward to main error handler

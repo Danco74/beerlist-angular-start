@@ -1,0 +1,62 @@
+<div class="container beer-header" style="padding: 1%">
+  
+  <!-- Back to home button -->
+    <div class="row">
+      <div class="col-md-2">
+        <a ui-sref="home">
+          Home
+        </a>
+      </div>
+    </div>
+
+  <!-- Preview image -->
+  
+  <div class="row">
+
+
+    <div class="col-md-2">
+        <h1 >
+          <span style="font-size:60px">{{beer.name}} </span>
+        </h1>
+      </div>
+  </div>
+  
+
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5 ">
+            <h2> Leave a review </h3>
+        </div>
+    </div>
+
+  <!-- Review text area -->
+  <div class="row">
+    <div class="col-md-6">
+      <textarea id="input-review" placeholder="Enter your review here..." ng-model="review"></textarea>
+    </div>
+  </div>
+
+  <!-- Review submit button -->
+  <div class="row">
+      <div class="col-md-2">
+          <button class="btn btn-primary" ng-click="submitReview()"> Submit </button>
+      </div>  
+  </div>
+</div>
+
+
+<div class="container">
+    
+    <div class="row">
+        <div class="col-md-5 ">
+            <h2> Reviews </h2>
+        </div> 
+    </div>
+    <hr class="style18">
+    <div ng-repeat="review in reviews">
+        <p> {{review.text}} </p>
+    </div>
+</div>
+

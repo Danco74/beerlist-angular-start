@@ -42,3 +42,25 @@
 .rate-button {
     margin-top: 5px
 }
+
+#input-review {
+    width: 95%;
+    height: 100px;
+}
+
+.row {
+    margin-top: 1%;
+}
+
+.img-preview {
+    width: 100px;
+    height: 150px;
+}
+
+hr.style18 { 
+    height: 30px; 
+    border-style: solid; 
+    border-color: #8c8b8b; 
+    border-width: 1px 0 0 0; 
+    border-radius: 20px; 
+  } 
