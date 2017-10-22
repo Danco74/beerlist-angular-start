@@ -55,8 +55,19 @@
         </div> 
     </div>
     <hr class="style18">
-    <div ng-repeat="review in reviews">
-        <p> {{review.text}} </p>
+    <div class="review-block" ng-repeat="review in reviews">
+        <div class="row">
+						<div class="col-sm-3">
+							<img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+							<div class="review-block-name"><a href="#">{{review.name}}</a></div>
+						</div>
+						<div class="col-sm-7">
+							<div class="review-block-description">  {{review.text}}  </div>
+            </div>
+            <div class="col-sm-2" style="text-align: center">
+							<button class="btn btn-danger delete-beer-button" review-id="{{review._id}}" ng-click="deleteReview()">  Delete </button>
+						</div>
+					</div>
     </div>
 </div>
 

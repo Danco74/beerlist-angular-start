@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var validator = require('express-validator');
 
-mongoose.connect('mongodb://localhost/beers');
+mongoose.connect('mongodb://192.168.145.128/beers');
 
 var app = express();
 var Beer = require("./beerModel");

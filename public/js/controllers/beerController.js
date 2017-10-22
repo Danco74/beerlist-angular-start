@@ -5,8 +5,8 @@ app.controller('beerController', function($scope, $stateParams,beerFactory) {
 
 
     $scope.submitReview = function(){
-        beerFactory.addReview($scope.beer._id,$scope.review).then(function (beers) {
-            console.log("stope here");
+        beerFactory.addReview($scope.beer._id,$scope.review).then(function (beer) {
+            $scope.beer.reviews.push(beer.reviews[beer.reviews.length - 1]);
         }).catch(function (error) {
             console.log(error)
         });
@@ -18,6 +18,10 @@ app.controller('beerController', function($scope, $stateParams,beerFactory) {
         }).catch(function (error) {
             console.log(error)
         });
+    }
+
+    $scope.deleteReview = function(){
+        console.log("test");
     }
 
 
